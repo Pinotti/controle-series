@@ -5,8 +5,9 @@ Episódios
 @endsection
 
 @section('conteudo')
-
-    <form action="">
+    @include('mensagem', ['mensagem' => $mensagem])
+    
+    <form action="/temporadas/{{ $temporadaId }}/episodios/assistir" method="post">
         @csrf
         <button class="btn btn-primary mt-2 mb-2">Salvar</button>
 
@@ -14,7 +15,7 @@ Episódios
             @foreach($episodios as $episodio)
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     Episódio {{ $episodio->numero }}
-                    <input type="checkbox">
+                    <input type="checkbox" name="episodios[]" value="{{ $episodio->id }}" {{ $episodio->assistido ? 'checked' : '' }}>
                 </li>
             @endforeach
         </ul>
