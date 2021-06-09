@@ -30,14 +30,15 @@ class SeriesController extends Controller
         $serie = $criadorDeSerie->criarSerie($request->nome, $request->qtd_temporadas, $request->ep_por_temporada);
 
         $users = User::all();
-        foreach ($users as $user)
+        foreach ($users as $indice => $user)
         {
+            $multiplicador = $indice + 1;
+
             $email = new NovaSerie($request->nome, $request->qtd_temporadas, $request->ep_por_temporada);
             $email->subject = 'Nova Série Adicionada';
 
-            Mail::to($user)->send($email);
-
-            sleep(5);
+            $quando = now()->addSecond($multiplicador * 10);
+            Mail::to($user)->later($quando, $email);
         }
         
         $request->session()->flash("mensagem", "Série adicionada com sucesso.");
