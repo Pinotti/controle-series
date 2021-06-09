@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Events\NovaSerie;
-use App\Listeners\{EnviarEmailNovaSerieCadastrada, LogNovaSerieCadastrada};
+use App\Events\{NovaSerie, SerieApagada};
+use App\Listeners\{EnviarEmailNovaSerieCadastrada, ExcluirCapaSerie, LogNovaSerieCadastrada};
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -21,9 +21,12 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         NovaSerie::class => [
-            //EnviarEmailNovaSerieCadastrada::class,
+            EnviarEmailNovaSerieCadastrada::class,
             LogNovaSerieCadastrada::class,
-        ]
+        ],
+        //SerieApagada::class => [
+        //    ExcluirCapaSerie::class
+        //]
     ];
 
     /**
